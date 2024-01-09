@@ -1,53 +1,27 @@
-
-import { useEffect, useState } from 'react'
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import './App.css'
-import axios from "axios"
+import WishlistPage from "./Pages/WishlistPage";
+import Homepage from "./Pages/HomePage";
+import BasketPage from "./Pages/BasketPage";
+import Layout from "./Layout/MainLayout";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import DetailsPage from "./Pages/DetailsPage";
 function App() {
-const [product, setProduct] = useState([])
-const [loading, setLoading] = useState(true)
-const [openModal, setOpenModal] = useState(false)
 
-const getProducts=async()=>{
-const res=await axios("http://localhost:5000/")
-setProduct(res.data)
-setLoading(false)
-}
-const deleteProduct=async (id)=>{
-  await axios.delete(`http://localhost:5000/${id}`)
-  getProducts()
-}
-const updateProduct=async (id)=>{
-  await axios.put(`http://localhost:5000/${id}`)
-  getProducts()
-  setOpenModal(!openModal)
-}
-useEffect(() => {
-  getProducts()
-}, [])
 
 
   return (
-    <>
-{
-              openModal &&
-              <form className={`${openModal} ? "open" : "close"`}>
-<input type="text" /> <br />
-<input type="text" /> <br />
-<input type="text" />
-            </form>
-            }
-      {
-        loading ? <span class="loader"></span>:
-        product && product.map((x)=>
-          <ul key={x.id}>
-            <li>{x.title}</li>
-            <li>{x.marka}</li>
-            <li>{x.price}</li>
-            <button onClick={()=>(deleteProduct(x._id))}>delete</button><button onClick={()=>(updateProduct(x._id))}>update</button>
-          </ul>
-        )
-      }
-    </>
+
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/basket" element={<BasketPage />} />
+          <Route path="/:id" element={<DetailsPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

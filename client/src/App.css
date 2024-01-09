@@ -27,7 +27,20 @@
     transform: rotate(360deg);
   }
 }
-
+#navbar{
+  display: flex;
+  gap: 20px;
+}
+#home{
+  padding-top: 50px;
+}
+.count{
+  align-items: center;
+  justify-content: center;
+}
+.buton-add{
+  margin-top: 30px;
+}
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
